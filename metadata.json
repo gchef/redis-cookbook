@@ -1,0 +1,264 @@
+{
+    "suggestions": {
+    },
+    "recipes": {
+      "redis::source": "Installs redis from source and adds init script"
+    },
+    "description": "Installs and configures redis",
+    "conflicting": {
+    },
+    "attributes": {
+      "redis/pidfile": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "/var/run/redis.pid",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis PID file",
+        "description": "Path to Redis PID"
+      },
+      "redis/checksum": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis source file checksum",
+        "description": "Will make sure the source file is the real deal"
+      },
+      "redis/datadir": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "/data/redis",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis data store",
+        "description": "All Redis data will be stored here"
+      },
+      "redis/bins": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis scripts",
+        "description": "After make, these are the scripts which will become available"
+      },
+      "redis/port": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "6379",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis port",
+        "description": "Accept connections on the specified port"
+      },
+      "redis/timeout": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "300",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis timeout",
+        "description": "Close the connection after a client is idle for this many seconds (0 to disable)"
+      },
+      "redis/dbfilename": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "redis_state.rdb",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis dbfilename",
+        "description": "The filename where to dump the DB"
+      },
+      "redis/logfile": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "/var/log/redis.log",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis log file",
+        "description": "Redis will log to this file"
+      },
+      "redis/dir": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "/opt/redis-1.2.6",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis installation path",
+        "description": "Redis will be installed here"
+      },
+      "redis/databases": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "16",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis databases",
+        "description": "Number of databases"
+      },
+      "redis/source": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis source file",
+        "description": "Downloaded location for Redis"
+      },
+      "redis/version": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "1.2.6",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis Version",
+        "description": "Which Redis version we're installing"
+      },
+      "redis/snapshots": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": {
+          "60": 10000,
+          "300": 10,
+          "900": 1
+        },
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis snapshots",
+        "description": "Will save the DB if both the given number of seconds and the given number of write operations against the DB occurred."
+      },
+      "redis/loglevel": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "notice",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis log level",
+        "description": "Sets server verbosity. Will be moderately verbose, what you want in production probably"
+      },
+      "redis/max_memory": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "256",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis max memory",
+        "description": "Don't use more memory than the specified amount of MBs"
+      },
+      "redis/bind_address": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "0.0.0.0",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis bind address",
+        "description": "Redis will listen on all IP addresses by default"
+      }
+    },
+    "providing": {
+    },
+    "dependencies": {
+      "build-essential": [
+
+      ]
+    },
+    "maintainer": "Paper Cavalier",
+    "replacing": {
+    },
+    "platforms": {
+      "debian": [
+
+      ],
+      "ubuntu": [
+
+      ]
+    },
+    "maintainer_email": "code@papercavalier.com",
+    "name": "redis",
+    "version": "0.0.1",
+    "groupings": {
+    },
+    "license": "Apache 2.0",
+    "long_description": "",
+    "recommendations": {
+    }
+  }

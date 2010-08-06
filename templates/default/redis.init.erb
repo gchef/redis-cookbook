@@ -1,0 +1,38 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          redis
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts redis database system
+# Description:       starts redis using basic start scripts
+### END INIT INFO
+
+PATH=<%= @node[:redis][:dir] %>/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DESC=redis-<%= @node[:redis][:version] %>
+
+test -x $DAEMON || exit 0
+
+set -e
+
+case "$1" in
+start)
+  echo -n "Starting $DESC... "
+  start-stop-daemon --start --user redis -c redis:redis --startas <%= @node[:redis][:dir] %>/bin/redis-server -- <%= @node[:redis][:dir] %>/redis.conf
+  echo "done."
+  ;;
+stop)
+  echo -n "Stopping $DESC... "
+  start-stop-daemon --stop --exec <%= @node[:redis][:dir] %>/bin/redis-server -c redis:redis <%= @node[:redis][:dir] %>/bin/redis-server -- <%= @node[:redis][:dir] %>/redis.conf
+  echo "done."
+  ;;
+*)
+  N=/etc/init.d/redis
+  echo "Usage: $N {start|stop}" >&2
+  exit 1
+  ;;
+esac
+
+exit 0
