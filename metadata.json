@@ -254,7 +254,7 @@
     },
     "maintainer_email": "code@papercavalier.com",
     "name": "redis",
-    "version": "0.0.1",
+    "version": "1.2.6",
     "groupings": {
     },
     "license": "Apache 2.0",

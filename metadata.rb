@@ -2,7 +2,7 @@ maintainer        "Paper Cavalier"
 maintainer_email  "code@papercavalier.com"
 license           "Apache 2.0"
 description       "Installs and configures redis"
-version           "0.0.1"
+version           "1.2.6"
 
 recipe "redis::source", "Installs redis from source and adds init script"
 
