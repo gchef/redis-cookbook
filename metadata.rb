@@ -2,7 +2,7 @@ maintainer        "Paper Cavalier"
 maintainer_email  "code@papercavalier.com"
 license           "Apache 2.0"
 description       "Installs and configures Redis 1.2.6"
-version           "0.1.1"
+version           "0.1.2"
 
 recipe "redis::source", "Installs redis from source and adds init script"
 
@@ -10,13 +10,13 @@ recipe "redis::source", "Installs redis from source and adds init script"
   supports os
 end
 
-%w{ build-essential }.each do |cb|
-  depends cb
-end
+depends "build-essential"
+
+
 
 attribute "redis/version",
-  :display_name => "Redis Version",
-  :description => "Which Redis version we're installing",
+  :display_name => "Redis version",
+  :description => "Which Redis version will be installed",
   :default => "1.2.6"
 
 attribute "redis/source",
@@ -25,7 +25,8 @@ attribute "redis/source",
 
 attribute "redis/checksum",
   :display_name => "Redis source file checksum",
-  :description => "Will make sure the source file is the real deal"
+  :description => "Will make sure the source file is the real deal",
+  :default => "c71aef0b3f31acb66353d86ba57dd321b541043f"
 
 attribute "redis/bins",
   :display_name => "Redis scripts",

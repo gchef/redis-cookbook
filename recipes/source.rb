@@ -35,12 +35,10 @@ bash "compile_redis_source" do
   EOH
 end
 
-unless `id redis`
-  user "redis" do
-    comment "Redis Administrator"
-    system true
-    shell "/bin/false"
-  end
+user "redis" do
+  comment "Redis Administrator"
+  system true
+  shell "/bin/false"
 end
 
 [node[:redis][:dir], "#{node[:redis][:dir]}/bin", node[:redis][:datadir]].each do |dir|
@@ -56,10 +54,14 @@ move_bins = ''
 node[:redis][:bins].each { |bin|
   move_bins += "cp #{bin} #{node[:redis][:dir]}/bin/\n"
 }
-bash "move bins" do
+bash "set_up_redis" do
   cwd "/tmp/redis-#{node[:redis][:version]}"
   code <<-EOH
     #{move_bins}
+    if [ `grep -c #{node[:redis][:dir]} /etc/environment` -eq 0 ]; then
+      sed -i -e 's/PATH="/PATH="#{node[:redis][:dir]}\/bin:/g' /etc/environment
+      source /etc/environment
+    fi
   EOH
 end
 

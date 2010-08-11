@@ -28,6 +28,7 @@
         "choice": [
 
         ],
+        "default": "c71aef0b3f31acb66353d86ba57dd321b541043f",
         "type": "string",
         "recipes": [
 
@@ -170,8 +171,8 @@
         "recipes": [
 
         ],
-        "display_name": "Redis Version",
-        "description": "Which Redis version we're installing"
+        "display_name": "Redis version",
+        "description": "Which Redis version will be installed"
       },
       "redis/snapshots": {
         "required": "optional",
@@ -254,7 +255,7 @@
     },
     "maintainer_email": "code@papercavalier.com",
     "name": "redis",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "groupings": {
     },
     "license": "Apache 2.0",
