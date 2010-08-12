@@ -52,18 +52,23 @@ end
 
 move_bins = ''
 node[:redis][:bins].each { |bin|
-  move_bins += "cp #{bin} #{node[:redis][:dir]}/bin/\n"
+  unless File.read("#{node[:redis][:dir]}/bin/#{bin}") == File.read("/tmp/redis-#{node[:redis][:version]}/#{bin}")
+    move_bins += "cp #{bin} #{node[:redis][:dir]}/bin/\n"
+  end
 }
-bash "set_up_redis" do
-  cwd "/tmp/redis-#{node[:redis][:version]}"
-  code <<-EOH
-    #{move_bins}
-    if [ `grep -c #{node[:redis][:dir]} /etc/environment` -eq 0 ]; then
-      sed -i -e 's/PATH="/PATH="#{node[:redis][:dir]}\/bin:/g' /etc/environment
-      source /etc/environment
-    fi
-  EOH
+if move_bins.size != 0
+  bash "set_up_redis" do
+    cwd "/tmp/redis-#{node[:redis][:version]}"
+    code <<-EOH
+      #{move_bins}"
+    EOH
+  end
 end
+environment = File.read('/etc/environment')
+unless environment.include? node[:redis][:dir]
+  File.open('/etc/environment', 'w') { |f| f.puts environment.gsub(/PATH="/, "PATH=\"#{node[:redis][:dir]}/bin:") }
+end
+# execute "source /etc/environment"
 
 file node[:redis][:logfile] do
   owner "redis"
