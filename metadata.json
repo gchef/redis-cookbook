@@ -42,7 +42,7 @@
         "choice": [
 
         ],
-        "default": "/data/redis",
+        "default": "/var/db/redis",
         "type": "string",
         "recipes": [
 
@@ -90,6 +90,20 @@
         ],
         "display_name": "Redis timeout",
         "description": "Close the connection after a client is idle for this many seconds (0 to disable)"
+      },
+      "redis/config": {
+        "required": "optional",
+        "calculated": false,
+        "choice": [
+
+        ],
+        "default": "/etc/redis.conf",
+        "type": "string",
+        "recipes": [
+
+        ],
+        "display_name": "Redis config",
+        "description": "Path to Redis config file"
       },
       "redis/dbfilename": {
         "required": "optional",

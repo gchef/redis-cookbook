@@ -40,7 +40,12 @@ attribute "redis/dir",
 attribute "redis/datadir",
   :display_name => "Redis data store",
   :description => "All Redis data will be stored here",
-  :default => "/data/redis"
+  :default => "/var/db/redis"
+
+attribute "redis/config",
+  :display_name => "Redis config",
+  :description => "Path to Redis config file",
+  :default => "/etc/redis.conf"
 
 attribute "redis/logfile",
   :display_name => "Redis log file",

@@ -4,7 +4,8 @@ default[:redis][:checksum]  = "c71aef0b3f31acb66353d86ba57dd321b541043f"
 default[:redis][:bins]      = %w(redis-benchmark redis-cli redis-server redis-stat)
 
 default[:redis][:dir]       = "/opt/redis-#{redis[:version]}"
-default[:redis][:datadir]   = "/data/redis"
+default[:redis][:datadir]   = "/var/db/redis"
+default[:redis][:config]    = "/etc/redis.conf"
 default[:redis][:logfile]   = "/var/log/redis.log"
 default[:redis][:pidfile]   = "/var/run/redis.pid"
 

@@ -27,12 +27,13 @@ remote_file "/tmp/redis-#{node[:redis][:version]}.tar.gz" do
   action :create_if_missing
 end
 
-bash "compile_redis_source" do
+bash "Compiling Redis #{node[:redis][:version]} from source" do
   cwd "/tmp"
   code <<-EOH
     tar zxf redis-#{node[:redis][:version]}.tar.gz
     cd redis-#{node[:redis][:version]} && make
   EOH
+  not_if { `ps -A -o command | grep "[r]edis"`.include? node[:redis][:version] }
 end
 
 user "redis" do
@@ -56,7 +57,7 @@ node[:redis][:bins].each { |bin|
     move_bins += "cp #{bin} #{node[:redis][:dir]}/bin/\n"
   end
 }
-if move_bins.size != 0
+unless move_bins.size == 0
   bash "set_up_redis" do
     cwd "/tmp/redis-#{node[:redis][:version]}"
     code <<-EOH
@@ -68,7 +69,6 @@ environment = File.read('/etc/environment')
 unless environment.include? node[:redis][:dir]
   File.open('/etc/environment', 'w') { |f| f.puts environment.gsub(/PATH="/, "PATH=\"#{node[:redis][:dir]}/bin:") }
 end
-# execute "source /etc/environment"
 
 file node[:redis][:logfile] do
   owner "redis"
@@ -78,8 +78,7 @@ file node[:redis][:logfile] do
   backup false
 end
 
-template "redis.conf" do
-  path "#{node[:redis][:dir]}/redis.conf"
+template node[:redis][:config] do
   source "redis.conf.erb"
   owner "redis"
   group "redis"
@@ -87,14 +86,14 @@ template "redis.conf" do
   backup false
 end
 
-template "redis.init" do
-  path "/etc/init.d/redis"
+template "/etc/init.d/redis" do
   source "redis.init.erb"
   mode 0755
   backup false
 end
 
 service "redis" do
-  supports :start => true, :stop => true
+  supports :start => true, :stop => true, :restart => true
   action [:enable, :start]
+  subscribes :restart, resources(:template => node[:redis][:config]), :immediately
 end
