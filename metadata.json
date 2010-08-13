@@ -269,7 +269,7 @@
     },
     "maintainer_email": "code@papercavalier.com",
     "name": "redis",
-    "version": "0.1.2",
+    "version": "0.1.4",
     "groupings": {
     },
     "license": "Apache 2.0",
