@@ -96,4 +96,5 @@ service "redis" do
   supports :start => true, :stop => true, :restart => true
   action [:enable, :start]
   subscribes :restart, resources(:template => node[:redis][:config])
+  subscribes :restart, resources(:template => "/etc/init.d/redis")
 end
