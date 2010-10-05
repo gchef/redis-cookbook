@@ -1,11 +1,14 @@
 {
-    "suggestions": {
+    "groupings": {
+    },
+    "recommendations": {
     },
     "recipes": {
       "redis::source": "Installs redis from source and adds init script"
     },
+    "long_description": "",
     "description": "Installs and configures Redis 1.2.6",
-    "conflicting": {
+    "suggestions": {
     },
     "attributes": {
       "redis/pidfile": {
@@ -249,15 +252,14 @@
         "description": "Redis will listen on all IP addresses by default"
       }
     },
-    "providing": {
+    "conflicting": {
     },
     "dependencies": {
       "build-essential": [
 
       ]
     },
-    "maintainer": "Paper Cavalier",
-    "replacing": {
+    "providing": {
     },
     "platforms": {
       "debian": [
@@ -267,13 +269,11 @@
 
       ]
     },
-    "maintainer_email": "code@papercavalier.com",
+    "maintainer": "Paper Cavalier",
     "name": "redis",
     "version": "0.1.6",
-    "groupings": {
+    "replacing": {
     },
     "license": "Apache 2.0",
-    "long_description": "",
-    "recommendations": {
-    }
+    "maintainer_email": "code@papercavalier.com"
   }
