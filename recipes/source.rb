@@ -51,22 +51,18 @@ unless `ps -A -o command | grep "[r]edis"`.include?(node[:redis][:version])
     EOH
   end
 
-  ruby_block "move_redis_bins" do
-    block do
-      move_bins = []
-      node[:redis][:bins].each { |bin|
-        unless File.exists?("#{node[:redis][:dir]}/bin/#{bin}") && File.read("#{node[:redis][:dir]}/bin/#{bin}") == File.read("/tmp/redis-#{node[:redis][:version]}/#{bin}")
-          move_bins << "cp #{bin} #{node[:redis][:dir]}/bin/"
-        end
-      }
-      unless move_bins.size == 0
-        bash "set_up_redis" do
-          cwd "/tmp/redis-#{node[:redis][:version]}"
-          code <<-EOH
-            #{move_bins.join("; ")}
-          EOH
-        end
-      end
+  move_bins = []
+  node[:redis][:bins].each { |bin|
+    unless File.exists?("#{node[:redis][:dir]}/bin/#{bin}") && File.read("#{node[:redis][:dir]}/bin/#{bin}") == File.read("/tmp/redis-#{node[:redis][:version]}/#{bin}")
+      move_bins << "cp #{bin} #{node[:redis][:dir]}/bin/"
+    end
+  }
+  unless move_bins.size == 0
+    bash "set_up_redis" do
+      cwd "/tmp/redis-#{node[:redis][:version]}"
+      code <<-EOH
+        #{move_bins.join("; ")}
+      EOH
     end
   end
 
