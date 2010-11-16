@@ -1,7 +1,9 @@
-default[:redis][:version]   = "1.2.6"
+default[:redis][:version]   = "2.0.4"
+default[:redis][:checksum]  = "fee2f1960eda22385503517a9a6dcae610df84d5"
 default[:redis][:source]    = "http://redis.googlecode.com/files/redis-#{redis[:version]}.tar.gz"
-default[:redis][:checksum]  = "c71aef0b3f31acb66353d86ba57dd321b541043f"
-default[:redis][:bins]      = %w(redis-benchmark redis-cli redis-server redis-stat)
+
+
+default[:redis][:bins]      = %w(redis-benchmark redis-cli redis-server mkreleasehdr.sh redis-check-aof redis-check-dump)
 
 default[:redis][:dir]       = "/opt/redis-#{redis[:version]}"
 default[:redis][:datadir]   = "/var/db/redis"
