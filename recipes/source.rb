@@ -37,14 +37,17 @@ end
 end
 
 unless `ps -A -o command | grep "[r]edis"`.include?(node[:redis][:version])
-  remote_file "/tmp/redis-#{node[:redis][:version]}.tar.gz" do
+  # ensuring we have this directory
+  directory "/opt/src"
+
+  remote_file "/opt/src/redis-#{node[:redis][:version]}.tar.gz" do
     source node[:redis][:source]
     checksum node[:redis][:checksum]
     action :create_if_missing
   end
 
   bash "Compiling Redis #{node[:redis][:version]} from source" do
-    cwd "/tmp"
+    cwd "/opt/src"
     code <<-EOH
       tar zxf redis-#{node[:redis][:version]}.tar.gz
       cd redis-#{node[:redis][:version]} && make
@@ -53,13 +56,13 @@ unless `ps -A -o command | grep "[r]edis"`.include?(node[:redis][:version])
 
   move_bins = []
   node[:redis][:bins].each { |bin|
-    unless File.exists?("#{node[:redis][:dir]}/bin/#{bin}") && File.read("#{node[:redis][:dir]}/bin/#{bin}") == File.read("/tmp/redis-#{node[:redis][:version]}/#{bin}")
+    unless File.exists?("#{node[:redis][:dir]}/bin/#{bin}") && File.read("#{node[:redis][:dir]}/bin/#{bin}") == File.read("/opt/src/redis-#{node[:redis][:version]}/#{bin}")
       move_bins << "cp #{bin} #{node[:redis][:dir]}/bin/"
     end
   }
   unless move_bins.size == 0
     bash "set_up_redis" do
-      cwd "/tmp/redis-#{node[:redis][:version]}"
+      cwd "/opt/src/redis-#{node[:redis][:version]}"
       code <<-EOH
         #{move_bins.join("; ")}
       EOH

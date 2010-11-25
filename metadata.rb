@@ -35,7 +35,7 @@ attribute "redis/bins",
 attribute "redis/dir",
   :display_name => "Redis installation path",
   :description => "Redis will be installed here",
-  :default => "/opt/redis-1.2.6"
+  :default => "/opt/redis-2.0.4"
 
 attribute "redis/datadir",
   :display_name => "Redis data store",
