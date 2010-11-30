@@ -23,3 +23,7 @@ default[:redis][:snapshots]   = {
 default[:redis][:dbfilename]   = "redis_state.rdb"
 default[:redis][:bind_address]= "0.0.0.0"
 default[:redis][:loglevel]    = "notice"
+
+default[:redis][:master]      = false
+default[:redis][:slaveof]     = nil
+default[:redis][:password]    = nil
