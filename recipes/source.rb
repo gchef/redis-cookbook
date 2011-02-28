@@ -56,8 +56,8 @@ unless `ps -A -o command | grep "[r]edis"`.include?(node[:redis][:version])
 
   move_bins = []
   node[:redis][:bins].each { |bin|
-    unless File.exists?("#{node[:redis][:dir]}/bin/#{bin}") && File.read("#{node[:redis][:dir]}/bin/#{bin}") == File.read("/opt/src/redis-#{node[:redis][:version]}/#{bin}")
-      move_bins << "cp #{bin} #{node[:redis][:dir]}/bin/"
+    unless File.exists?("#{node[:redis][:dir]}/bin/#{bin}") && File.read("#{node[:redis][:dir]}/bin/#{bin}") == File.read("/opt/src/redis-#{node[:redis][:version]}/src/#{bin}")
+      move_bins << "cp src/#{bin} #{node[:redis][:dir]}/bin/"
     end
   }
   unless move_bins.size == 0

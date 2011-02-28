@@ -17,7 +17,7 @@ depends "build-essential"
 attribute "redis/version",
   :display_name => "Redis version",
   :description => "Which Redis version will be installed",
-  :default => "2.0.4"
+  :default => "2.2.1"
 
 attribute "redis/source",
   :display_name => "Redis source file",
@@ -26,7 +26,7 @@ attribute "redis/source",
 attribute "redis/checksum",
   :display_name => "Redis source file checksum",
   :description => "Will make sure the source file is the real deal",
-  :default => "c71aef0b3f31acb66353d86ba57dd321b541043f"
+  :default => "a64c32f37e67bdeabbab74f8413a960a8d42e381"
 
 attribute "redis/bins",
   :display_name => "Redis scripts",
@@ -35,7 +35,7 @@ attribute "redis/bins",
 attribute "redis/dir",
   :display_name => "Redis installation path",
   :description => "Redis will be installed here",
-  :default => "/opt/redis-2.0.4"
+  :default => "/opt/redis-2.2.1"
 
 attribute "redis/datadir",
   :display_name => "Redis data store",
