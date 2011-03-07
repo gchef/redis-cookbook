@@ -1,7 +1,7 @@
 maintainer        "Paper Cavalier"
 maintainer_email  "code@papercavalier.com"
 license           "Apache 2.0"
-description       "Installs and configures Redis 2.0.4"
+description       "Installs and configures Redis 2.2.2"
 version           "0.1.6"
 
 recipe "redis::source", "Installs redis from source and adds init script"
@@ -12,12 +12,10 @@ end
 
 depends "build-essential"
 
-
-
 attribute "redis/version",
   :display_name => "Redis version",
   :description => "Which Redis version will be installed",
-  :default => "2.2.1"
+  :default => "2.2.2"
 
 attribute "redis/source",
   :display_name => "Redis source file",
@@ -35,7 +33,7 @@ attribute "redis/bins",
 attribute "redis/dir",
   :display_name => "Redis installation path",
   :description => "Redis will be installed here",
-  :default => "/opt/redis-2.2.1"
+  :default => "/opt/redis-2.2.2"
 
 attribute "redis/datadir",
   :display_name => "Redis data store",
