@@ -375,7 +375,7 @@ vm-pages <%= @node[:redis][:vm_pages] %>
 #
 # The special value of 0 turn off threaded I/O and enables the blocking
 # Virtual Memory implementation.
-vm-max-threads <% @node[:redis][:vm_max_threads] %>
+vm-max-threads <%= @node[:redis][:vm_max_threads] %>
 
 ############################### ADVANCED CONFIG ###############################
 
