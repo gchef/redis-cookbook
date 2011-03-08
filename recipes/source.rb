@@ -97,6 +97,16 @@ template "/etc/init.d/redis" do
   backup false
 end
 
+[File.join(node[:redis][:datadir], node[:redis][:appendfilename]), 
+ File.join(node[:redis][:datadir], node[:redis][:dbfilename])].each do |data_file|
+  file data_file do
+    owner "redis"
+    group "redis"
+    mode 0644
+    backup false
+  end
+end
+
 service "redis" do
   supports :start => true, :stop => true, :restart => true
   action [:enable, :start]
