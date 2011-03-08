@@ -1,4 +1,4 @@
-default[:redis][:version]   = "2.2.1"
+default[:redis][:version]   = "2.2.2"
 default[:redis][:checksum]  = "a64c32f37e67bdeabbab74f8413a960a8d42e381"
 default[:redis][:source]    = "http://redis.googlecode.com/files/redis-#{redis[:version]}.tar.gz"
 default[:redis][:bins]      = %w(redis-benchmark redis-cli redis-server mkreleasehdr.sh redis-check-aof redis-check-dump)
