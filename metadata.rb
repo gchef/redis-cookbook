@@ -70,10 +70,10 @@ attribute "redis/databases",
   :description => "Number of databases",
   :default => "16"
 
-attribute "redis/max_memory",
+attribute "redis/maxmemory",
   :display_name => "Redis max memory",
   :description => "Don't use more memory than the specified amount of MBs",
-  :default => "256"
+  :default => "nil"
 
 attribute "redis/snapshots",
   :display_name => "Redis snapshots",
