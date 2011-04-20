@@ -46,32 +46,12 @@ unless `ps -A -o command | grep "[r]edis"`.include?(node[:redis][:version])
     action :create_if_missing
   end
 
-  bash "Compiling Redis #{node[:redis][:version]} from source" do
+  bash "Compiling Redis v#{node[:redis][:version]} from source" do
     cwd "/opt/src"
-    code <<-EOH
+    code %{
       tar zxf redis-#{node[:redis][:version]}.tar.gz
-      cd redis-#{node[:redis][:version]} && make
-    EOH
-  end
-
-  move_bins = []
-  node[:redis][:bins].each { |bin|
-    unless File.exists?("#{node[:redis][:dir]}/bin/#{bin}") && File.read("#{node[:redis][:dir]}/bin/#{bin}") == File.read("/opt/src/redis-#{node[:redis][:version]}/src/#{bin}")
-      move_bins << "cp src/#{bin} #{node[:redis][:dir]}/bin/"
-    end
-  }
-  unless move_bins.size == 0
-    bash "set_up_redis" do
-      cwd "/opt/src/redis-#{node[:redis][:version]}"
-      code <<-EOH
-        #{move_bins.join("; ")}
-      EOH
-    end
-  end
-
-  environment = File.read('/etc/environment')
-  unless environment.include? node[:redis][:dir]
-    File.open('/etc/environment', 'w') { |f| f.puts environment.gsub(/PATH="/, "PATH=\"#{node[:redis][:dir]}/bin:") }
+      cd redis-#{node[:redis][:version]} && make && make install
+    }
   end
 end
 
@@ -97,8 +77,7 @@ template "/etc/init.d/redis" do
   backup false
 end
 
-[File.join(node[:redis][:datadir], node[:redis][:appendfilename]), 
- File.join(node[:redis][:datadir], node[:redis][:dbfilename])].each do |data_file|
+[node[:redis][:appendfilename], node[:redis][:dbfilename]].each do |data_file|
   file data_file do
     owner "redis"
     group "redis"

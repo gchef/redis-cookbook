@@ -23,4 +23,3 @@
 node.set[:redis][:slaveof] = search(:node, 'recipes:redis\:\:master').first.ec2.local_hostname
 
 include_recipe "redis::source"
-
