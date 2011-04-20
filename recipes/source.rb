@@ -36,7 +36,7 @@ end
   end
 end
 
-unless `ps -A -o command | grep "[r]edis"`.include?(node[:redis][:version])
+unless `redis-server -v 2> /dev/null`.include?(node[:redis][:version])
   # ensuring we have this directory
   directory "/opt/src"
 
