@@ -12,9 +12,9 @@
 # Description:       starts redis using basic start scripts
 ### END INIT INFO
 
-PATH=<%= @node[:redis][:dir] %>/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DESC=redis-<%= @node[:redis][:version] %>
-DAEMON=<%= @node[:redis][:dir] %>/bin/redis-server
+PATH=/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DESC=redis-<%= node[:redis][:version] %>
+DAEMON=/usr/local/bin/redis-server
 
 test -x $DAEMON || exit 0
 
@@ -22,13 +22,13 @@ set -e
 
 start_server() {
   echo -n "Starting $DESC... "
-  start-stop-daemon --start --user redis -c redis:redis --startas $DAEMON -- <%= @node[:redis][:config] %>
+  start-stop-daemon --start --user redis -c redis:redis --startas $DAEMON -- <%= node[:redis][:config] %>
   echo "done."
 }
 
 stop_server() {
   echo -n "Stopping $DESC... "
-  start-stop-daemon --stop --exec $DAEMON -c redis:redis $DAEMON -- <%= @node[:redis][:config] %>
+  start-stop-daemon --stop --exec $DAEMON -c redis:redis $DAEMON -- <%= node[:redis][:config] %>
   echo "done."
 }
 
