@@ -16,14 +16,17 @@
 
 # By default Redis does not run as a daemon. Use 'yes' if you need it.
 # Note that Redis will write a pid file in /var/run/redis.pid when daemonized.
-daemonize yes
+#
+daemonize no
 
 # When running daemonized, Redis writes a pid file in /var/run/redis.pid by
 # default. You can specify a custom pid file location here.
+#
 pidfile <%= node[:redis][:pidfile] %>
 
 # Accept connections on the specified port, default is 6379.
 # If port 0 is specified Redis will not listen on a TCP socket.
+#
 port <%= node[:redis][:port] %>
 
 # If you want you can bind a single interface, if the bind option is not
@@ -38,6 +41,7 @@ bind <%= node[:redis][:bind_address] %>
 <%= "unixsocket #{node[:redis][:unixsocket]}" if node[:redis][:unixsocket] %>
 
 # Close the connection after a client is idle for N seconds (0 to disable)
+#
 timeout <%= node[:redis][:timeout] %>
 
 # Set server verbosity to 'debug'
@@ -46,19 +50,23 @@ timeout <%= node[:redis][:timeout] %>
 # verbose (many rarely useful info, but not a mess like the debug level)
 # notice (moderately verbose, what you want in production probably)
 # warning (only very important / critical messages are logged)
+#
 loglevel <%= node[:redis][:loglevel] %>
 
 # Specify the log file name. Also 'stdout' can be used to force
 # Redis to log on the standard output. Note that if you use standard
 # output for logging but daemonize, logs will be sent to /dev/null
+#
 logfile <%= node[:redis][:logfile] %>
 
 <% if node[:redis][:syslog_enabled] == "yes" -%>
 # To enable logging to the system logger, just set 'syslog-enabled' to yes,
 # and optionally update the other syslog parameters to suit your needs.
+#
 syslog-enabled <%= node[:redis][:syslog_enabled] %>
 
 # Specify the syslog identity.
+#
 syslog-ident <%= node[:redis][:syslog_ident] %>
 
 # Specify the syslog facility.  Must be USER or between LOCAL0-LOCAL7.
@@ -68,6 +76,7 @@ syslog-facility <%= node[:redis][:syslog_facility] %>
 # Set the number of databases. The default database is DB 0, you can select
 # a different one on a per-connection basis using SELECT <dbid> where
 # dbid is a number between 0 and 'databases'-1
+#
 databases <%= node[:redis][:databases] %>
 
 ################################ SNAPSHOTTING  #################################
@@ -85,7 +94,7 @@ databases <%= node[:redis][:databases] %>
 #   after 60 sec if at least 10000 keys changed
 #
 #   Note: you can disable saving at all commenting all the "save" lines.
-
+#
 <% node[:redis][:snapshots].each do |interval, keys| %>
 save <%= interval %> <%= keys %>
 <% end %>
@@ -97,16 +106,18 @@ save <%= interval %> <%= keys %>
 # rdbcompression yes
 
 # The filename where to dump the DB
+#
 dbfilename <%= node[:redis][:dbfilename] %>
 
 # The working directory.
 #
 # The DB will be written inside this directory, with the filename specified
 # above using the 'dbfilename' configuration directive.
-# 
+#
 # Also the Append Only File will be created inside this directory.
-# 
+#
 # Note that you must specify a directory here, not a file name.
+#
 dir <%= node[:redis][:datadir] %>
 
 ################################# REPLICATION #################################
@@ -117,6 +128,7 @@ dir <%= node[:redis][:datadir] %>
 # different interval, or to listen to another port, and so on.
 #
 # slaveof <masterip> <masterport>
+#
 <% if node[:redis][:slaveof] -%>
 slaveof <%= "#{node[:redis][:slaveof]} #{node[:redis][:port]}" %>
 <% end -%>
@@ -127,6 +139,7 @@ slaveof <%= "#{node[:redis][:slaveof]} #{node[:redis][:port]}" %>
 # refuse the slave request.
 #
 # masterauth <master-password>
+#
 <% if node[:redis][:slaveof] && node[:redis][:password] -%>
 masterauth <%= node[:redis][:password] %>
 <% end -%>
@@ -158,6 +171,7 @@ slave-serve-stale-data <%= node[:redis][:slave_serve_stale_data] %>
 # use a very strong password otherwise it will be very easy to break.
 #
 # requirepass foobared
+#
 <% if node[:redis][:password] -%>
 requirepass <%= node[:redis][:password] %>
 <% end -%>
@@ -177,7 +191,7 @@ requirepass <%= node[:redis][:password] %>
 # an empty string:
 #
 # rename-command CONFIG ""
-
+#
 <% node[:redis][:command_renames].each do |command, name| %>
 rename-command <%= command %> <%= name %>
 <% end %>
@@ -211,6 +225,7 @@ rename-command <%= command %> <%= name %>
 # errors for write operations, and this may even lead to DB inconsistency.
 #
 # maxmemory <bytes>
+#
 <% if node[:redis][:maxmemory] -%>
 maxmemory <%= node[:redis][:maxmemory].to_i * 1024 * 1024 %>
 <% end -%>
@@ -237,6 +252,7 @@ maxmemory <%= node[:redis][:maxmemory].to_i * 1024 * 1024 %>
 # The default is:
 #
 # maxmemory-policy volatile-lru
+#
 maxmemory-policy <%= node[:redis][:maxmemory_policy] %>
 
 # LRU and minimal TTL algorithms are not precise algorithms but approximated
@@ -246,6 +262,7 @@ maxmemory-policy <%= node[:redis][:maxmemory_policy] %>
 # using the following configuration directive.
 #
 # maxmemory-samples 3
+#
 maxmemory-samples <%= node[:redis][:maxmemory_samples] %>
 
 ############################## APPEND ONLY MODE ###############################
@@ -265,11 +282,11 @@ maxmemory-samples <%= node[:redis][:maxmemory_samples] %>
 #
 # IMPORTANT: Check the BGREWRITEAOF to check how to rewrite the append
 # log file in background when it gets too big.
-
+#
 appendonly <%= node[:redis][:appendonly] %>
 
 # The name of the append only file (default: "appendonly.aof")
-
+#
 appendfilename <%= node[:redis][:appendfilename] %>
 
 # The fsync() call tells the Operating System to actually write data on disk
@@ -294,6 +311,7 @@ appendfilename <%= node[:redis][:appendfilename] %>
 
 # appendfsync always
 # appendfsync everysec
+#
 appendfsync <%= node[:redis][:appendfsync] %>
 
 # When the AOF fsync policy is set to always or everysec, and a background
@@ -314,6 +332,7 @@ appendfsync <%= node[:redis][:appendfsync] %>
 # 
 # If you have latency problems turn this to "yes". Otherwise leave it as
 # "no" that is the safest pick from the point of view of durability.
+#
 no-appendfsync-on-rewrite <%= node[:redis][:no_appendfsync_on_rewrite] %>
 
 ################################ VIRTUAL MEMORY ###############################
@@ -326,8 +345,8 @@ no-appendfsync-on-rewrite <%= node[:redis][:no_appendfsync_on_rewrite] %>
 #
 # To enable VM just set 'vm-enabled' to yes, and set the following three
 # VM parameters accordingly to your needs.
-
-vm-enabled <%= node[:redis][:vm_enabled] ? 'yes' : 'no' %>
+#
+vm-enabled <%= node[:redis][:vm_enabled] %>
 
 # This is the path of the Redis swap file. As you can guess, swap files
 # can't be shared by different Redis instances, so make sure to use a swap
@@ -340,6 +359,7 @@ vm-enabled <%= node[:redis][:vm_enabled] ? 'yes' : 'no' %>
 # *** WARNING *** if you are using a shared hosting the default of putting
 # the swap file under /tmp is not secure. Create a dir with access granted
 # only to Redis user and configure Redis to create the swap file there.
+#
 vm-swap-file <%= node[:redis][:vm_swap_file]%>
 
 # vm-max-memory configures the VM to use at max the specified amount of
@@ -350,6 +370,7 @@ vm-swap-file <%= node[:redis][:vm_swap_file]%>
 # default, just specify the max amount of RAM you can in bytes, but it's
 # better to leave some margin. For instance specify an amount of RAM
 # that's more or less between 60 and 80% of your free RAM.
+#
 vm-max-memory <%= node[:redis][:vm_max_memory] %>
 
 # Redis swap files is split into pages. An object can be saved using multiple
@@ -361,6 +382,7 @@ vm-max-memory <%= node[:redis][:vm_max_memory] %>
 # If you use a lot of small objects, use a page size of 64 or 32 bytes.
 # If you use a lot of big objects, use a bigger page size.
 # If unsure, use the default :)
+#
 vm-page-size <%= node[:redis][:vm_page_size] %>
 
 # Number of total memory pages in the swap file.
@@ -374,6 +396,7 @@ vm-page-size <%= node[:redis][:vm_page_size] %>
 #
 # It's better to use the smallest acceptable value for your application,
 # but the default is large in order to work in most conditions.
+#
 vm-pages <%= node[:redis][:vm_pages] %>
 
 # Max number of VM I/O threads running at the same time.
@@ -385,6 +408,7 @@ vm-pages <%= node[:redis][:vm_pages] %>
 #
 # The special value of 0 turn off threaded I/O and enables the blocking
 # Virtual Memory implementation.
+#
 vm-max-threads <%= node[:redis][:vm_max_threads] %>
 
 ############################### ADVANCED CONFIG ###############################
@@ -393,12 +417,14 @@ vm-max-threads <%= node[:redis][:vm_max_threads] %>
 # have at max a given numer of elements, and the biggest element does not
 # exceed a given threshold. You can configure this limits with the following
 # configuration directives.
+#
 hash-max-zipmap-entries 512
 hash-max-zipmap-value 64
 
 # Similarly to hashes, small lists are also encoded in a special way in order
 # to save a lot of space. The special representation is only used when
 # you are under the following limits:
+#
 list-max-ziplist-entries 512
 list-max-ziplist-value 64
 
@@ -407,6 +433,7 @@ list-max-ziplist-value 64
 # of 64 bit signed integers.
 # The following configuration setting sets the limit in the size of the
 # set in order to use this special memory saving encoding.
+#
 set-max-intset-entries 512
 
 # Active rehashing uses 1 millisecond every 100 milliseconds of CPU time in
@@ -427,6 +454,7 @@ set-max-intset-entries 512
 #
 # use "activerehashing yes" if you don't have such hard requirements but
 # want to free memory asap when possible.
+#
 activerehashing <%= node[:redis][:activerehashing] %>
 
 ################################## INCLUDES ###################################
