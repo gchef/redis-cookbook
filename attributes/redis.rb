@@ -1,12 +1,12 @@
-default[:redis][:version]   = "2.2.9"
-default[:redis][:checksum]  = "36d039c34684ad066d78ae4600fcf2fffbff2b7f"
+default[:redis][:version]   = "2.2.11"
+default[:redis][:checksum]  = "a94c1dd2573e19f1abd335507d5ea280753b092ddf16d014dcd3212f5a5bc0eb"
 default[:redis][:source]    = "http://redis.googlecode.com/files/redis-#{redis[:version]}.tar.gz"
 
-default[:redis][:dir]       = "/opt/redis-#{redis[:version]}"
 default[:redis][:datadir]   = "/var/db/redis"
 default[:redis][:config]    = "/etc/redis.conf"
 default[:redis][:logfile]   = "/var/log/redis.log"
 default[:redis][:pidfile]   = "/var/run/redis.pid"
+default[:redis][:init]      = "upstart"
 
 default[:redis][:port]        = 6379
 default[:redis][:timeout]     = 300
@@ -34,14 +34,14 @@ default[:redis][:slave_serve_stale_data]    = "yes"
 default[:redis][:maxmemory_policy]          = "volatile-lru"
 default[:redis][:maxmemory_samples]         = 3
 
-default[:redis][:appendonly]                = "yes"
+default[:redis][:appendonly]                = "no"
 default[:redis][:appendfilename]            = "#{redis[:datadir]}/appendonly.aof"
 default[:redis][:appendfsync]               = "everysec"
 default[:redis][:no_appendfsync_on_rewrite] = "no"
 
 default[:redis][:command_renames]           = {}
 
-default[:redis][:vm_enabled]                = false
+default[:redis][:vm_enabled]                = "no"
 default[:redis][:vm_swap_file]              = "/tmp/redis.swap"
 default[:redis][:vm_max_memory]             = 0
 default[:redis][:vm_page_size]              = 32

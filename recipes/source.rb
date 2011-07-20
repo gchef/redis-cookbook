@@ -2,9 +2,9 @@
 # Cookbook Name:: redis
 # Recipe:: source
 #
-# Author:: Gerhard Lazu (<gerhard.lazu@papercavalier.com>)
+# Author:: Gerhard Lazu (<gerhard@lazu.co.uk>)
 #
-# Copyright 2010, Paper Cavalier, LLC
+# Copyright 2011, Gerhard Lazu
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,27 +27,25 @@ user "redis" do
   shell "/bin/false"
 end
 
-[node[:redis][:dir], "#{node[:redis][:dir]}/bin", node[:redis][:datadir]].each do |dir|
-  directory dir do
-    owner "redis"
-    group "redis"
-    mode 0755
-    recursive true
-  end
+directory node[:redis][:datadir] do
+  owner "redis"
+  group "redis"
+  mode 0755
+  recursive true
 end
 
 unless `redis-server -v 2> /dev/null`.include?(node[:redis][:version])
   # ensuring we have this directory
-  directory "/opt/src"
+  directory "#{node[:redis][:basedir]}/src"
 
-  remote_file "/opt/src/redis-#{node[:redis][:version]}.tar.gz" do
+  remote_file "#{node[:redis][:basedir]}/src/redis-#{node[:redis][:version]}.tar.gz" do
     source node[:redis][:source]
     checksum node[:redis][:checksum]
     action :create_if_missing
   end
 
   bash "Compiling Redis v#{node[:redis][:version]} from source" do
-    cwd "/opt/src"
+    cwd "#{node[:redis][:basedir]}/src"
     code %{
       tar zxf redis-#{node[:redis][:version]}.tar.gz
       cd redis-#{node[:redis][:version]} && make && make install
@@ -71,12 +69,6 @@ template node[:redis][:config] do
   backup false
 end
 
-template "/etc/init.d/redis" do
-  source "redis.init.erb"
-  mode 0755
-  backup false
-end
-
 [node[:redis][:appendfilename], node[:redis][:dbfilename]].each do |data_file|
   file data_file do
     owner "redis"
@@ -86,9 +78,4 @@ end
   end
 end
 
-service "redis" do
-  supports :start => true, :stop => true, :restart => true
-  action [:enable, :start]
-  subscribes :restart, resources(:template => node[:redis][:config])
-  subscribes :restart, resources(:template => "/etc/init.d/redis")
-end
+include_recipe "redis::init"

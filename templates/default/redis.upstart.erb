@@ -1,0 +1,8 @@
+description "redis"
+
+start on runlevel [23]
+stop on shutdown
+
+exec sudo -u redis /usr/local/bin/redis-server <%= node[:redis][:config] %>
+
+respawn

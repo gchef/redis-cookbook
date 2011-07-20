@@ -2,9 +2,9 @@
 # Cookbook Name:: redis
 # Recipe:: default
 #
-# Author:: Gerhard Lazu (<gerhard.lazu@papercavalier.com>)
+# Author:: Gerhard Lazu (<gerhard@lazu.co.uk>)
 #
-# Copyright 2010, Paper Cavalier, LLC
+# Copyright 2011, Gerhard Lazu
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
