@@ -18,7 +18,8 @@ default[:redis][:snapshots]   = {
   60  => 10000
 }
 
-default[:redis][:dbfilename]                = "#{redis[:datadir]}/redis_state.rdb"
+default[:redis][:dbfilename]                = "redis_state.rdb"
+default[:redis][:rdbcompression]            = "yes"
 default[:redis][:bind_address]              = "0.0.0.0"
 default[:redis][:unixsocket]                = false
 default[:redis][:loglevel]                  = "notice"
