@@ -36,7 +36,7 @@ default[:redis][:maxmemory_policy]          = "volatile-lru"
 default[:redis][:maxmemory_samples]         = 3
 
 default[:redis][:appendonly]                = "no"
-default[:redis][:appendfilename]            = "#{redis[:datadir]}/appendonly.aof"
+default[:redis][:appendfilename]            = "appendonly.aof"
 default[:redis][:appendfsync]               = "everysec"
 default[:redis][:no_appendfsync_on_rewrite] = "no"
 
