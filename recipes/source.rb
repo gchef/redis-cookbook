@@ -69,13 +69,4 @@ template node[:redis][:config] do
   backup false
 end
 
-[node[:redis][:appendfilename], node[:redis][:dbfilename]].each do |data_file|
-  file data_file do
-    owner "redis"
-    group "redis"
-    mode 0644
-    backup false
-  end
-end
-
 include_recipe "redis::init"

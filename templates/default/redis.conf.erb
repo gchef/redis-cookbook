@@ -107,7 +107,7 @@ rdbcompression <%= node[:redis][:rdbcompression] %>
 
 # The filename where to dump the DB
 #
-dbfilename <%= "#{node[:redis][:datadir]}/#{node[:redis][:dbfilename]}" %>
+dbfilename <%= node[:redis][:dbfilename] %>
 
 # The working directory.
 #
@@ -287,7 +287,7 @@ appendonly <%= node[:redis][:appendonly] %>
 
 # The name of the append only file (default: "appendonly.aof")
 #
-appendfilename <%= "#{node[:redis][:datadir]}/#{node[:redis][:appendfilename]}" %>
+appendfilename <%= node[:redis][:appendfilename] %>
 
 # The fsync() call tells the Operating System to actually write data on disk
 # instead to wait for more data in the output buffer. Some OS will really flush 
