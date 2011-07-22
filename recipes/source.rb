@@ -69,4 +69,8 @@ template node[:redis][:config] do
   backup false
 end
 
+execute "echo 1 > /proc/sys/vm/overcommit_memory" do
+  not_if "[ $(cat /proc/sys/vm/overcommit_memory) -eq 1 ]"
+end
+
 include_recipe "redis::init"
