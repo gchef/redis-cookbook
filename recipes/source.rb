@@ -34,8 +34,26 @@ directory node[:redis][:datadir] do
   recursive true
 end
 
+include_recipe "redis::init"
+
+service "redis" do
+  supports :start => true, :stop => true, :restart => true
+  provider Chef::Provider::Service::Upstart if node[:redis][:init] == "upstart"
+end
+
+# download and install a new redis version
+#
 unless `redis-server -v 2> /dev/null`.include?(node[:redis][:version])
+
+  # stop if a previous redis version has been installed
+  #
+  service "redis" do
+    action :stop
+    only_if "[ -e /usr/local/bin/redis-server ]"
+  end
+
   # ensuring we have this directory
+  #
   directory "#{node[:redis][:basedir]}/src"
 
   remote_file "#{node[:redis][:basedir]}/src/redis-#{node[:redis][:version]}.tar.gz" do
@@ -73,4 +91,6 @@ execute "echo 1 > /proc/sys/vm/overcommit_memory" do
   not_if "[ $(cat /proc/sys/vm/overcommit_memory) -eq 1 ]"
 end
 
-include_recipe "redis::init"
+service "redis" do
+  action [:enable, :restart]
+end
