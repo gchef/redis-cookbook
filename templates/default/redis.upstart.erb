@@ -3,9 +3,11 @@
 
 description "redis"
 
-start on runlevel [23]
-stop on shutdown
+start on runlevel [2345]
+stop on [!2345]
+
+respawn
+respawn limit 10 5
 
 exec sudo -u redis /usr/local/bin/redis-server <%= node[:redis][:config] %>
 
-respawn
