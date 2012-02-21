@@ -9,5 +9,11 @@ stop on [!2345]
 respawn
 respawn limit 10 5
 
+pre-start script
+  if [ ! -e <%= node[:redis][:datadir] %> ]; then
+    mkdir -p <%= node[:redis][:datadir] %>
+  fi
+end script
+
 exec sudo -u redis /usr/local/bin/redis-server <%= node[:redis][:config] %>
 
