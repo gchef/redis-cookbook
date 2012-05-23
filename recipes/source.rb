@@ -5,7 +5,7 @@ user "redis" do
   shell "/bin/sh"
 end
 
-directory node.redis.datadir do
+directory node[:redis][:datadir] do
   owner "redis"
   group "redis"
   mode 0755
@@ -16,12 +16,12 @@ include_recipe "redis::init"
 
 service "redis" do
   supports :start => true, :stop => true, :restart => true
-  provider Chef::Provider::Service::Upstart if node.redis.init == "upstart"
+  provider Chef::Provider::Service::Upstart if node[:redis][:init] == "upstart"
 end
 
 # download and install a new redis version if not running the latest
 #
-unless `redis-server -v 2>/dev/null`.include?(node.redis.version)
+unless `redis-server -v 2>/dev/null`.include?(node[:redis][:version])
 
   # stop if a previous redis version has been installed
   #
@@ -32,26 +32,25 @@ unless `redis-server -v 2>/dev/null`.include?(node.redis.version)
 
   # ensuring we have this directory
   #
-  directory node.redis.srcdir
+  directory node[:redis][:srcdir]
 
-  remote_file "#{node.redis.srcdir}/#{node.redis.dir}.tar.gz" do
-    source node.redis.source
-    checksum node.redis.checksum
+  remote_file "#{node[:redis][:srcdir]}/#{node[:redis][:dir]}.tar.gz" do
+    source node[:redis][:source]
     action :create_if_missing
   end
 
   bash "Compiling Redis v#{node[:redis][:version]} from source" do
-    cwd node.redis.srcdir
+    cwd node[:redis][:srcdir]
     code %{
-      if [ ! -d #{node.redis.dir} ]; then
-        tar zxf #{node.redis.dir}.tar.gz
+      if [ ! -d #{node[:redis][:dir]} ]; then
+        tar zxf #{node[:redis][:dir]}.tar.gz
       fi
-      cd #{node.redis.dir} && make && make install
+      cd #{node[:redis][:dir]} && make && make install
     }
   end
 end
 
-file node.redis.logfile do
+file node[:redis][:logfile] do
   owner "redis"
   group "redis"
   mode 0644

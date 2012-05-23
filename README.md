@@ -1,4 +1,4 @@
-## Redis 2.4.4, built from source.
+## Redis 2.4.14, built from source.
 
 ### Tested only on Ubuntu, 10.04.3, 64bit.
 
