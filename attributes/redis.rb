@@ -65,7 +65,7 @@ default[:redis][:syslog_enabled] = false
 # Specify the syslog identity.
 default[:redis][:syslog_ident] = "redis"
 #
-# Specify the syslog facility.  Must be USER or between LOCAL0-LOCAL7.
+# Specify the syslog facility. Must be USER or between LOCAL0-LOCAL7.
 default[:redis][:syslog_facility] = "local0"
 #
 # Set the number of databases. The default database is DB 0, you can select
