@@ -8,7 +8,7 @@ end
 directory node[:redis][:datadir] do
   owner "redis"
   group "redis"
-  mode 0755
+  mode "0755"
   recursive true
 end
 
@@ -53,7 +53,7 @@ end
 file node[:redis][:logfile] do
   owner "redis"
   group "redis"
-  mode 0644
+  mode "0644"
   action :create_if_missing
   backup false
 end
@@ -62,7 +62,7 @@ template node[:redis][:config] do
   source "redis.conf.erb"
   owner "redis"
   group "redis"
-  mode 0644
+  mode "0644"
   backup false
   notifies :restart, resources(:service => "redis"), :delayed
 end

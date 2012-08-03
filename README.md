@@ -1,4 +1,4 @@
-## Redis 2.4.14, built from source.
+## Latest stable Redis, built from source.
 
 ### Tested only on Ubuntu, 10.04.3, 64bit.
 
@@ -19,7 +19,7 @@ to fork the cookbook, add your own and submit a pull request.
 
 4. All config values are heavily documented. Open up the attributes file and
    you'll see what I mean. They were taken directly from the official redis
-repository, version 2.4.4.
+repository, version 2.4.16.
 
 5. Redis is now configured so that by default it doesn't persist the data to
    disk. Before, snapshotting was turned on by default.  Just to make this

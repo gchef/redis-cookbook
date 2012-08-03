@@ -1,4 +1,4 @@
-default[:redis][:version]   = "2.4.14"
+default[:redis][:version]   = "2.4.16"
 default[:redis][:dir]       = "redis-#{redis.version}"
 default[:redis][:source]    = "http://redis.googlecode.com/files/#{redis.dir}.tar.gz"
 default[:redis][:srcdir]    = "/usr/local/src"
