@@ -1,6 +1,6 @@
-default[:redis][:version]   = "2.4.16"
-default[:redis][:dir]       = "redis-#{redis.version}"
-default[:redis][:source]    = "http://redis.googlecode.com/files/#{redis.dir}.tar.gz"
+set[:redis][:version]   = "2.4.16"
+set[:redis][:dir]       = "redis-#{redis.version}"
+set[:redis][:source]    = "http://redis.googlecode.com/files/#{redis.dir}.tar.gz"
 default[:redis][:srcdir]    = "/usr/local/src"
 
 default[:redis][:init]      = "upstart"
