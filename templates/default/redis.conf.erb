@@ -300,7 +300,8 @@ rename-command CONFIG <%= node[:redis][:rename_command] %>
 # IMPORTANT: Check the BGREWRITEAOF to check how to rewrite the append
 # log file in background when it gets too big.
 
-appendonly no
+appendonly <%= node[:redis][:appendonly] %> 
+
 
 # The name of the append only file (default: "appendonly.aof")
 # appendfilename appendonly.aof
@@ -325,8 +326,10 @@ appendonly no
 #
 # If unsure, use "everysec".
 
+appendfsync <%= node[:redis][:appendfsync] %>
+
 # appendfsync always
-appendfsync everysec
+# appendfsync everysec
 # appendfsync no
 
 # When the AOF fsync policy is set to always or everysec, and a background

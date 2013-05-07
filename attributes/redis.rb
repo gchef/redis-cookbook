@@ -208,6 +208,8 @@ default[:redis][:rename_command] = false
 # Add config variables as required.
 
 
+default[:redis][:appendonly] = "no"
+default[:redis][:appendfsync] = "everysec"
 
 ########################################################################## SLOW LOG
 #
