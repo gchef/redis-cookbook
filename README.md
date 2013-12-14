@@ -1,6 +1,6 @@
 ## Latest stable Redis, built from source.
 
-### Tested only on Ubuntu, 10.04.3, 64bit.
+### Tested only on Ubuntu, 12.04.3, 64bit.
 
 If you've been using this cookbook in the past, there are some important
 changes that you should take into account before upgrading to the latest
@@ -19,7 +19,7 @@ to fork the cookbook, add your own and submit a pull request.
 
 4. All config values are heavily documented. Open up the attributes file and
    you'll see what I mean. They were taken directly from the official redis
-repository, version 2.4.16.
+repository, version 2.6.17.
 
 5. Redis is now configured so that by default it doesn't persist the data to
    disk. Before, snapshotting was turned on by default.  Just to make this
